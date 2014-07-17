@@ -30,7 +30,8 @@
             "KmbPuppetDb": "src/"
         },
         "classmap": [
-            "./Module.php"
+            "./Module.php",
+            "./test/KmbPuppetDbTest/FakeHttpClient.php"
         ]
     }
 }
