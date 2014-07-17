@@ -1,0 +1,36 @@
+{
+    "name": "kambalabs/kmb-puppetdb",
+    "description": "Kamba core module that provides a wrapper to PuppetDB API",
+    "keywords": [
+        "kamba",
+        "module",
+        "PuppetDB"
+    ],
+    "homepage": "http://github.com/kambalabs/KmbPuppetDb",
+    "license": "GPL V2",
+    "authors": [
+        {
+            "name": "Emmanuel Bouton",
+            "email": "goten4@gmail.com",
+            "homepage": "http://github.com/goten4",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "kambalabs/kmb-core": "dev-master"
+    },
+    "require-dev": {
+        "phpunit/PHPUnit": "3.7.*",
+        "zendframework/zend-developer-tools": "dev-master",
+        "satooshi/php-coveralls": "dev-master"
+    },
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-0": {
+            "KmbPuppetDb": "src/"
+        },
+        "classmap": [
+            "./Module.php"
+        ]
+    }
+}
