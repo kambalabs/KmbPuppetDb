@@ -20,7 +20,7 @@
  */
 namespace KmbPuppetDb\Service;
 
-use KmbCore\DateTimeFactory;
+use KmbBase\DateTimeFactory;
 use KmbPuppetDb;
 use KmbPuppetDb\Service;
 use Zend\ServiceManager\FactoryInterface;

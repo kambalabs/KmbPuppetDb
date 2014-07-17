@@ -17,6 +17,6 @@ class ReportFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('KmbPuppetDb\Service\Report', $service);
         $this->assertInstanceOf('KmbPuppetDb\Options\ModuleOptions', $service->getOptions());
         $this->assertInstanceOf('KmbPuppetDb\Client', $service->getPuppetDbClient());
-        $this->assertInstanceOf('KmbCore\DateTimeFactory', $service->getDateTimeFactory());
+        $this->assertInstanceOf('KmbBase\DateTimeFactory', $service->getDateTimeFactory());
     }
 }

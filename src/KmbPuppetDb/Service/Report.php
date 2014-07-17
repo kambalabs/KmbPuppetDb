@@ -20,7 +20,7 @@
  */
 namespace KmbPuppetDb\Service;
 
-use KmbCore\DateTimeFactoryInterface;
+use KmbBase\DateTimeFactoryInterface;
 use KmbPuppetDb\Model;
 use KmbPuppetDb;
 use KmbPuppetDb\Options\ReportServiceOptionsInterface;
@@ -156,7 +156,7 @@ class Report implements ReportInterface
     /**
      * Get DateTimeFactory.
      *
-     * @return \KmbCore\DateTimeFactoryInterface
+     * @return \KmbBase\DateTimeFactoryInterface
      */
     public function getDateTimeFactory()
     {
@@ -166,7 +166,7 @@ class Report implements ReportInterface
     /**
      * Set DateTimeFactory.
      *
-     * @param \KmbCore\DateTimeFactoryInterface $dateTimeFactory
+     * @param \KmbBase\DateTimeFactoryInterface $dateTimeFactory
      * @return Report
      */
     public function setDateTimeFactory($dateTimeFactory)

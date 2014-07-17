@@ -1,7 +1,7 @@
 <?php
 namespace KmbPuppetDbTest\Service;
 
-use KmbCore\FakeDateTimeFactory;
+use KmbBase\FakeDateTimeFactory;
 use KmbPuppetDb\Model;
 use KmbPuppetDb\Options\ModuleOptions;
 use KmbPuppetDb\Request;
