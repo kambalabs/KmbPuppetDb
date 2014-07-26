@@ -5,8 +5,8 @@
  * If you have a ./config/autoload/ directory set up for your project, you can
  * drop this config file in it and change the values as you wish.
  */
-return array(
-    'puppetdb' => array(
+return [
+    'puppetdb' => [
         /**
          * Puppet DB base URI
          */
@@ -20,5 +20,5 @@ return array(
         //'http_options' => array(
         //    'adapter' => 'Zend\Http\Client\Adapter\Socket',
         //),
-    ),
-);
+    ],
+];
