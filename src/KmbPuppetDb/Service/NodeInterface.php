@@ -43,4 +43,10 @@ interface NodeInterface
      * @return Model\NodesCollection
      */
     public function getAll($query = null, $offset = null, $limit = null, $orderBy = null);
+
+    /**
+     * @param Model\NodeInterface $node
+     * @return NodeInterface
+     */
+    public function replaceFacts(Model\NodeInterface $node);
 }

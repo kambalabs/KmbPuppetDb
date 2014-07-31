@@ -7,6 +7,8 @@ use KmbPuppetDb\Options\ModuleOptions;
 use KmbPuppetDb\Request;
 use KmbPuppetDb\Response;
 use KmbPuppetDb\Service;
+use KmbPuppetDbTest\Bootstrap;
+use Zend\Log\Logger;
 
 class NodeTest extends \PHPUnit_Framework_TestCase
 {
@@ -26,6 +28,9 @@ class NodeTest extends \PHPUnit_Framework_TestCase
         $this->nodeService = new Service\Node();
         $this->nodeService->setOptions(new ModuleOptions());
         $this->nodeService->setPuppetDbClient($this->puppetDbClientMock);
+        /** @var Logger $logger */
+        $logger = Bootstrap::getServiceManager()->get('Logger');
+        $this->nodeService->setLogger($logger);
     }
 
     /** @test */
@@ -101,6 +106,14 @@ class NodeTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('node3.local', $nodes->getNodeByIndex(0)->getName());
     }
 
+    /** @test */
+    public function canReplaceFacts()
+    {
+        $node = new Model\Node('node1.local', NodeInterface::UNCHANGED, new \DateTime(), ['kmbenv' => 'STABLE_PF1']);
+
+        $this->nodeService->replaceFacts($node);
+    }
+
     /**
      * @param array $data
      * @param int   $total
@@ -143,6 +156,8 @@ class NodeTest extends \PHPUnit_Framework_TestCase
                 $limit = $request->getLimit();
                 $orderBy = $request->getOrderBy();
                 switch ($request->getUri()) {
+                    case '/commands':
+                        return $self->response(['uuid' => '784a5c9a-aaee-4466-b607-bb4262248803']);
                     case '/nodes':
                         if (!empty($query)) {
                             return $self->response(array(

@@ -22,16 +22,10 @@ namespace KmbPuppetDb\Model;
 
 interface NodeInterface
 {
+    const ENVIRONMENT_FACT = 'kmbenv';
     const UNCHANGED = 'unchanged';
     const CHANGED   = 'changed';
     const FAILED    = 'failed';
-
-    /**
-     * Get name.
-     *
-     * @return string
-     */
-    public function getName();
 
     /**
      * Set name.
@@ -42,11 +36,26 @@ interface NodeInterface
     public function setName($name);
 
     /**
-     * Get facts.
+     * Get name.
      *
-     * @return array
+     * @return string
      */
-    public function getFacts();
+    public function getName();
+
+    /**
+     * Set Environment.
+     *
+     * @param string $environment
+     * @return Node
+     */
+    public function setEnvironment($environment);
+
+    /**
+     * Get Environment.
+     *
+     * @return string
+     */
+    public function getEnvironment();
 
     /**
      * Set facts.
@@ -66,6 +75,13 @@ interface NodeInterface
     public function addFact($name, $value);
 
     /**
+     * Get facts.
+     *
+     * @return array
+     */
+    public function getFacts();
+
+    /**
      * Determine if the node has the specified fact.
      *
      * @param string $name
@@ -74,11 +90,12 @@ interface NodeInterface
     public function hasFact($name);
 
     /**
-     * Get time of last report.
+     * Get the specified fact.
      *
-     * @return \DateTime
+     * @param string $name
+     * @return array
      */
-    public function getReportedAt();
+    public function getFact($name);
 
     /**
      * Set time of last report.
@@ -89,11 +106,11 @@ interface NodeInterface
     public function setReportedAt(\DateTime $reportedAt = null);
 
     /**
-     * Get status.
+     * Get time of last report.
      *
-     * @return string
+     * @return \DateTime
      */
-    public function getStatus();
+    public function getReportedAt();
 
     /**
      * Set status.
@@ -102,6 +119,13 @@ interface NodeInterface
      * @return NodeInterface
      */
     public function setStatus($status);
+
+    /**
+     * Get status.
+     *
+     * @return string
+     */
+    public function getStatus();
 
     /**
      * Determine if the node has the specified status.

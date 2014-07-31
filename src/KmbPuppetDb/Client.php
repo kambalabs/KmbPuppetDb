@@ -55,8 +55,15 @@ class Client implements ClientInterface
         $uri = $request->getFullUri();
         $response = new Response();
 
-        $this->getHttpClient()->setHeaders(array('Accept' => 'application/json'));
-        $this->getHttpClient()->setUri($this->getUri($uri));
+        $headers = ['Accept' => 'application/json'];
+        $client = $this->getHttpClient();
+        $client->setUri($this->getUri($uri));
+        $client->setMethod($request->getMethod());
+        if ($request->getMethod() == Http\Request::METHOD_POST) {
+            $client->setRawBody(Json::encode($request->getData()));
+            $headers['Content-Type'] = 'application/json';
+        }
+        $client->setHeaders($headers);
 
         $start = microtime(true);
         $httpResponse = $this->getHttpClient()->send();
@@ -76,9 +83,9 @@ class Client implements ClientInterface
             throw new InvalidArgumentException($data->error);
         }
 
-        $headers = $httpResponse->getHeaders();
-        if ($headers->has('X-Records')) {
-            $response->setTotal(intval($headers->get('X-Records')->getFieldValue()));
+        $responseHeaders = $httpResponse->getHeaders();
+        if ($responseHeaders->has('X-Records')) {
+            $response->setTotal(intval($responseHeaders->get('X-Records')->getFieldValue()));
         }
 
         return $response;

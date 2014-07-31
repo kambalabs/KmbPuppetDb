@@ -424,6 +424,8 @@ class FakeHttpClient extends Client
 
         if ($this->isFailure()) {
             $statusLine = 'HTTP/1.0 500 Internal Server Error';
+        } elseif ($this->getMethod() == Request::METHOD_POST) {
+            $body = Json::encode(['uuid' => 'f37d4e5e-b31b-49df-b89e-5762387d867b']);
         } elseif (preg_match("~/v3/nodes$~", $this->getUri())) {
             $body = Json::encode($this->nodes);
         } elseif (preg_match("~/v3/nodes\\?offset=([0-9]+)&limit=([0-9]+)&include\\-total=true$~", $this->getUri(), $matches)) {

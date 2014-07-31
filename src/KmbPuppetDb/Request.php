@@ -24,39 +24,31 @@ class Request
 {
     const API_VERSION = 'v3';
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $uri;
 
-    /**
-     * @var Query|array
-     */
+    /** @var string */
+    protected $method = \Zend\Http\Request::METHOD_GET;
+
+    /* @var Query|array */
     protected $query;
 
-    /**
-     * @var int
-     */
+    /** @var array */
+    protected $data;
+
+    /** @var int */
     protected $offset;
 
-    /**
-     * @var int
-     */
+    /** @var int */
     protected $limit;
 
-    /**
-     * @var OrderBy|array
-     */
+    /** @var OrderBy|array */
     protected $orderBy;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $summarizeBy;
 
-    /**
-     * @var bool
-     */
+    /** @var bool */
     protected $includeTotal = false;
 
     /**
@@ -147,6 +139,28 @@ class Request
     }
 
     /**
+     * Set Method.
+     *
+     * @param string $method
+     * @return Request
+     */
+    public function setMethod($method)
+    {
+        $this->method = $method;
+        return $this;
+    }
+
+    /**
+     * Get Method.
+     *
+     * @return string
+     */
+    public function getMethod()
+    {
+        return $this->method;
+    }
+
+    /**
      * Get Query.
      *
      * @return Query|array
@@ -174,6 +188,28 @@ class Request
     {
         $this->query = $query;
         return $this;
+    }
+
+    /**
+     * Set Data.
+     *
+     * @param array $data
+     * @return Request
+     */
+    public function setData($data)
+    {
+        $this->data = $data;
+        return $this;
+    }
+
+    /**
+     * Get Data.
+     *
+     * @return array
+     */
+    public function getData()
+    {
+        return $this->data;
     }
 
     /**

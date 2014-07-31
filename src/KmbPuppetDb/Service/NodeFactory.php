@@ -22,6 +22,7 @@ namespace KmbPuppetDb\Service;
 
 use KmbPuppetDb;
 use KmbPuppetDb\Service;
+use Zend\Log\Logger;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
@@ -37,9 +38,15 @@ class NodeFactory implements FactoryInterface
     {
         $nodeService = new Service\Node();
         $nodeService->setOptions($serviceLocator->get('KmbPuppetDb\Options\ModuleOptions'));
+
         /** @var KmbPuppetDb\Client $puppetDbClient */
         $puppetDbClient = $serviceLocator->get('KmbPuppetDb\Client');
         $nodeService->setPuppetDbClient($puppetDbClient);
+
+        /** @var Logger $logger */
+        $logger = $serviceLocator->get('Logger');
+        $nodeService->setLogger($logger);
+
         return $nodeService;
     }
 }

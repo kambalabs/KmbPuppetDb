@@ -4,6 +4,7 @@ namespace KmbPuppetDbTest;
 use KmbPuppetDb\Exception\InvalidArgumentException;
 use KmbPuppetDb;
 use KmbPuppetDb\Exception\RuntimeException;
+use Zend\Http\Request;
 use Zend\Log\Logger;
 
 class ClientTest extends \PHPUnit_Framework_TestCase
@@ -116,6 +117,19 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     public function cannotGetRequestInError()
     {
         $this->puppetDbClient->send(new KmbPuppetDb\Request('/nodes/unknown.local'));
+    }
+
+    /** @test */
+    public function canSendPost()
+    {
+        $request = new KmbPuppetDb\Request('/commands');
+        $request->setMethod(Request::METHOD_POST);
+        $request->setData([]);
+
+        $response = $this->puppetDbClient->send($request);
+
+        $this->assertInstanceOf('KmbPuppetDb\Response', $response);
+        $this->assertEquals('f37d4e5e-b31b-49df-b89e-5762387d867b', $response->getData()->uuid);
     }
 
     /**

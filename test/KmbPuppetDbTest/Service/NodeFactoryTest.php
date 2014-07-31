@@ -17,5 +17,6 @@ class NodeFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('KmbPuppetDb\Service\Node', $nodeService);
         $this->assertInstanceOf('KmbPuppetDb\Options\ModuleOptions', $nodeService->getOptions());
         $this->assertInstanceOf('KmbPuppetDb\Client', $nodeService->getPuppetDbClient());
+        $this->assertInstanceOf('Zend\Log\Logger', $nodeService->getLogger());
     }
 }

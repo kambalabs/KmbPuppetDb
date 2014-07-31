@@ -20,11 +20,13 @@
  */
 namespace KmbPuppetDb\Service;
 
-use KmbPuppetDb\Exception\InvalidArgumentException;
 use KmbPuppetDb;
+use KmbPuppetDb\Exception\InvalidArgumentException;
 use KmbPuppetDb\Model;
 use KmbPuppetDb\Options\NodeServiceOptionsInterface;
 use KmbPuppetDb\Service;
+use Zend\Http;
+use Zend\Log\Logger;
 use Zend\Stdlib\ArrayUtils;
 use Zend\Stdlib\Hydrator\HydratorInterface;
 
@@ -45,6 +47,9 @@ class Node implements NodeInterface
      */
     protected $nodeHydrator;
 
+    /** @var Logger */
+    protected $logger;
+
     /**
      * Retrieves a node by its name.
      *
@@ -64,10 +69,10 @@ class Node implements NodeInterface
      * $query can be omitted :
      *    $nodeService->getAll(10, 10);
      *
-     * @param mixed   $query
-     * @param int     $offset
-     * @param mixed   $limit
-     * @param array   $orderBy
+     * @param mixed $query
+     * @param int   $offset
+     * @param mixed $limit
+     * @param array $orderBy
      * @return Model\NodesCollection
      */
     public function getAll($query = null, $offset = null, $limit = null, $orderBy = null)
@@ -88,6 +93,30 @@ class Node implements NodeInterface
             $nodes[] = $node;
         }
         return Model\NodesCollection::factory($nodes, $response->getTotal());
+    }
+
+    /**
+     * @param Model\NodeInterface $node
+     * @return NodeInterface
+     */
+    public function replaceFacts(Model\NodeInterface $node)
+    {
+        $request = new KmbPuppetDb\Request('/commands');
+        $request->setMethod(Http\Request::METHOD_POST);
+        $request->setData([
+            'command' => 'replace facts',
+            'version' => 2,
+            'payload' => [
+                'name' => $node->getName(),
+                'environment' => $node->getFact(Model\NodeInterface::ENVIRONMENT_FACT),
+                'values' => $node->getFacts(),
+            ],
+        ]);
+
+        $response = $this->getPuppetDbClient()->send($request);
+        $this->getLogger()->info('[' . $response->getData()->uuid . ']' . ' Replacing facts for ' . $node->getName());
+
+        return $this;
     }
 
     /**
@@ -132,6 +161,28 @@ class Node implements NodeInterface
     {
         $this->puppetDbClient = $puppetDbClient;
         return $this;
+    }
+
+    /**
+     * Set Logger.
+     *
+     * @param Logger $logger
+     * @return Node
+     */
+    public function setLogger($logger)
+    {
+        $this->logger = $logger;
+        return $this;
+    }
+
+    /**
+     * Get Logger.
+     *
+     * @return Logger
+     */
+    public function getLogger()
+    {
+        return $this->logger;
     }
 
     /**

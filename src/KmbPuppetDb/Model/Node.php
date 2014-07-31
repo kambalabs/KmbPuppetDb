@@ -27,6 +27,9 @@ class Node implements NodeInterface
      */
     protected $name;
 
+    /** @var string */
+    protected $environment;
+
     /**
      * @var string
      */
@@ -42,22 +45,13 @@ class Node implements NodeInterface
      */
     protected $facts = array();
 
-    public function __construct($name = null, $status = null, $reportedAt = null, $facts = array())
+    public function __construct($name = null, $status = null, $reportedAt = null, $facts = array(), $environment = null)
     {
         $this->setName($name);
         $this->setStatus($status);
         $this->setReportedAt($reportedAt);
         $this->setFacts($facts);
-    }
-
-    /**
-     * Get name.
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
+        $this->setEnvironment($environment);
     }
 
     /**
@@ -73,13 +67,41 @@ class Node implements NodeInterface
     }
 
     /**
-     * Get facts.
+     * Get name.
      *
-     * @return array
+     * @return string
      */
-    public function getFacts()
+    public function getName()
     {
-        return $this->facts;
+        return $this->name;
+    }
+
+    /**
+     * Set Environment.
+     *
+     * @param string $environment
+     * @return Node
+     */
+    public function setEnvironment($environment)
+    {
+        $this->environment = $environment;
+        if ($environment !== null) {
+            $this->addFact(NodeInterface::ENVIRONMENT_FACT, $environment);
+        }
+        return $this;
+    }
+
+    /**
+     * Get Environment.
+     *
+     * @return string
+     */
+    public function getEnvironment()
+    {
+        if ($this->environment === null) {
+            $this->environment = $this->getFact(NodeInterface::ENVIRONMENT_FACT);
+        }
+        return $this->environment;
     }
 
     /**
@@ -108,6 +130,16 @@ class Node implements NodeInterface
     }
 
     /**
+     * Get facts.
+     *
+     * @return array
+     */
+    public function getFacts()
+    {
+        return $this->facts;
+    }
+
+    /**
      * Determine if the node has the specified fact.
      *
      * @param string $name
@@ -133,16 +165,6 @@ class Node implements NodeInterface
     }
 
     /**
-     * Get time of last report.
-     *
-     * @return \DateTime
-     */
-    public function getReportedAt()
-    {
-        return $this->reportedAt;
-    }
-
-    /**
      * Set time of last report.
      *
      * @param \DateTime $reportedAt
@@ -155,13 +177,13 @@ class Node implements NodeInterface
     }
 
     /**
-     * Get status.
+     * Get time of last report.
      *
-     * @return string
+     * @return \DateTime
      */
-    public function getStatus()
+    public function getReportedAt()
     {
-        return $this->status;
+        return $this->reportedAt;
     }
 
     /**
@@ -174,6 +196,16 @@ class Node implements NodeInterface
     {
         $this->status = $status;
         return $this;
+    }
+
+    /**
+     * Get status.
+     *
+     * @return string
+     */
+    public function getStatus()
+    {
+        return $this->status;
     }
 
     /**
