@@ -54,19 +54,21 @@ class Client implements ClientInterface
     {
         $uri = $request->getFullUri();
         $response = new Response();
+        $httpRequest = new Http\Request();
 
         $headers = ['Accept' => 'application/json'];
-        $client = $this->getHttpClient();
-        $client->setUri($this->getUri($uri));
-        $client->setMethod($request->getMethod());
+        $httpRequest->setUri($this->getUri($uri));
         if ($request->getMethod() == Http\Request::METHOD_POST) {
-            $client->setRawBody(Json::encode($request->getData()));
+            $httpRequest->setMethod($request->getMethod());
+            $httpRequest->setContent(Json::encode($request->getData()));
             $headers['Content-Type'] = 'application/json';
         }
-        $client->setHeaders($headers);
+        $newHeaders = new Http\Headers();
+        $newHeaders->addHeaders($headers);
+        $httpRequest->setHeaders($newHeaders);
 
         $start = microtime(true);
-        $httpResponse = $this->getHttpClient()->send();
+        $httpResponse = $this->getHttpClient()->send($httpRequest);
         $this->logRequest($start, $httpResponse->renderStatusLine(), $uri);
         $body = $httpResponse->getBody();
 
