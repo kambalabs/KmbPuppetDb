@@ -424,29 +424,29 @@ class FakeHttpClient extends Client
 
         if ($this->isFailure()) {
             $statusLine = 'HTTP/1.0 500 Internal Server Error';
-        } elseif ($this->getMethod() == Request::METHOD_POST) {
+        } elseif ($request->getMethod() == Request::METHOD_POST) {
             $body = Json::encode(['uuid' => 'f37d4e5e-b31b-49df-b89e-5762387d867b']);
-        } elseif (preg_match("~/v3/nodes$~", $this->getUri())) {
+        } elseif (preg_match("~/v3/nodes$~", $request->getUri())) {
             $body = Json::encode($this->nodes);
-        } elseif (preg_match("~/v3/nodes\\?offset=([0-9]+)&limit=([0-9]+)&include\\-total=true$~", $this->getUri(), $matches)) {
+        } elseif (preg_match("~/v3/nodes\\?offset=([0-9]+)&limit=([0-9]+)&include\\-total=true$~", $request->getUri(), $matches)) {
             $body = Json::encode(array_slice($this->nodes, $matches[1], $matches[2]));
             $headers->addHeaders(array('X-Records' => count($this->nodes)));
-        } elseif (preg_match("~/v3/nodes\\?query=%5B%22%3D%22%2C%20%5B%22fact%22%2C%20%22(.*)%22%5D%2C%20%22(.*)%22%5D~", $this->getUri(), $matches)) {
+        } elseif (preg_match("~/v3/nodes\\?query=%5B%22%3D%22%2C%20%5B%22fact%22%2C%20%22(.*)%22%5D%2C%20%22(.*)%22%5D~", $request->getUri(), $matches)) {
             $body = Json::encode($this->getNodesByFact($matches[1], $matches[2]));
-        } elseif (preg_match("~/v3/nodes/(.*)/facts$~", $this->getUri(), $matches)) {
+        } elseif (preg_match("~/v3/nodes/(.*)/facts$~", $request->getUri(), $matches)) {
             $body = Json::encode($this->getFormattedFacts($matches[1]));
-        } elseif (preg_match("~/v3/nodes/(.*)$~", $this->getUri(), $matches)) {
+        } elseif (preg_match("~/v3/nodes/(.*)$~", $request->getUri(), $matches)) {
             $body = Json::encode($this->getNode($matches[1]));
-        } elseif (preg_match("~/v3/event-counts\\?query=%5B%22and%22%2C%20%5B%22%3D%22%2C%20%22certname%22%2C%20%22(.*)%22%5D%2C%20%5B%22%3D%22%2C%20%22latest-report%3F%22%2C%20true%5D%5D~", $this->getUri(), $matches)) {
+        } elseif (preg_match("~/v3/event-counts\\?query=%5B%22and%22%2C%20%5B%22%3D%22%2C%20%22certname%22%2C%20%22(.*)%22%5D%2C%20%5B%22%3D%22%2C%20%22latest-report%3F%22%2C%20true%5D%5D~", $request->getUri(), $matches)) {
             $body = Json::encode($this->getEventsCount($matches[1]));
-        } elseif (preg_match("~/v3/events\\?query=.+" . $this->getFakeDateTime() . ".+&offset=([0-9]+)&limit=([0-9]+)&include\\-total=true$~", $this->getUri(), $matches)) {
+        } elseif (preg_match("~/v3/events\\?query=.+" . $this->getFakeDateTime() . ".+&offset=([0-9]+)&limit=([0-9]+)&include\\-total=true$~", $request->getUri(), $matches)) {
             $body = Json::encode(array_slice($this->reportsToday, $matches[1], $matches[2]));
             $headers->addHeaders(array('X-Records' => count($this->reportsToday)));
-        } elseif (preg_match("~/v3/events\\?query=.+" . $this->getFakeDateTime() . "~", $this->getUri())) {
+        } elseif (preg_match("~/v3/events\\?query=.+" . $this->getFakeDateTime() . "~", $request->getUri())) {
             $body = Json::encode($this->reportsToday);
-        } elseif (preg_match("~/v3/events\\?query=~", $this->getUri())) {
+        } elseif (preg_match("~/v3/events\\?query=~", $request->getUri())) {
             $body = Json::encode($this->reportsYesterday);
-        } elseif (preg_match("~/v3/fact-names$~", $this->getUri())) {
+        } elseif (preg_match("~/v3/fact-names$~", $request->getUri())) {
             $body = Json::encode($this->factNames);
         } else {
             $isSuccess = false;
