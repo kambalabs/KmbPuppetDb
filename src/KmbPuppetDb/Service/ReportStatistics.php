@@ -21,6 +21,7 @@
 namespace KmbPuppetDb\Service;
 
 use KmbPuppetDb\Model;
+use KmbPuppetDb\Query;
 use KmbPuppetDb\Service;
 
 class ReportStatistics implements ReportStatisticsInterface
@@ -53,56 +54,61 @@ class ReportStatistics implements ReportStatisticsInterface
     /**
      * Get skips count.
      *
+     * @param Query|array $query
      * @return int
      */
-    public function getSkipsCount()
+    public function getSkipsCount($query = null)
     {
-        return $this->getStatistic('skips');
+        return $this->getStatistic('skips', $query);
     }
 
     /**
      * Get success count.
      *
+     * @param Query|array $query
      * @return int
      */
-    public function getSuccessCount()
+    public function getSuccessCount($query = null)
     {
-        return $this->getStatistic('success');
+        return $this->getStatistic('success', $query);
     }
 
     /**
      * Get failures count.
      *
+     * @param Query|array $query
      * @return int
      */
-    public function getFailuresCount()
+    public function getFailuresCount($query = null)
     {
-        return $this->getStatistic('failures');
+        return $this->getStatistic('failures', $query);
     }
 
     /**
      * Get noops count.
      *
+     * @param Query|array $query
      * @return int
      */
-    public function getNoopsCount()
+    public function getNoopsCount($query = null)
     {
-        return $this->getStatistic('noops');
+        return $this->getStatistic('noops', $query);
     }
 
     /**
      * Get all statistics as array.
      *
+     * @param Query|array $query
      * @return array
      */
-    public function getAllAsArray()
+    public function getAllAsArray($query = null)
     {
-        return array(
-            'skips' => $this->getSkipsCount(),
-            'success' => $this->getSuccessCount(),
-            'failures' => $this->getFailuresCount(),
-            'noops' => $this->getNoopsCount(),
-        );
+        return [
+            'skips' => $this->getSkipsCount($query),
+            'success' => $this->getSuccessCount($query),
+            'failures' => $this->getFailuresCount($query),
+            'noops' => $this->getNoopsCount($query),
+        ];
     }
 
     /**
@@ -129,26 +135,29 @@ class ReportStatistics implements ReportStatisticsInterface
 
     /**
      * @param $statistic
+     * @param Query|array $query
      * @return mixed
      */
-    protected function getStatistic($statistic)
+    protected function getStatistic($statistic, $query = null)
     {
         if ($this->$statistic == null) {
-            $this->processStatistics();
+            $this->processStatistics($query);
         }
         return $this->$statistic;
     }
 
     /**
      * Browse all reports and process all the statistics
+     *
+     * @param Query|array $query
      */
-    protected function processStatistics()
+    protected function processStatistics($query = null)
     {
         $this->skips = 0;
         $this->success = 0;
         $this->failures = 0;
         $this->noops = 0;
-        $reports = $this->getReportService()->getAllForToday();
+        $reports = $this->getReportService()->getAllForToday($query);
         foreach ($reports as $report) {
             /** @var Model\Report $report */
             if ($report->getStatus() == Model\ReportInterface::SKIPPED) {

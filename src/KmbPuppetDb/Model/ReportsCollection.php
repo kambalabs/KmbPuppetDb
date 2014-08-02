@@ -26,7 +26,7 @@ class ReportsCollection implements \Iterator, \Countable
     protected $index = 0;
 
     /** @var array */
-    protected $data = array();
+    protected $data = [];
 
     /** @var int */
     protected $total;

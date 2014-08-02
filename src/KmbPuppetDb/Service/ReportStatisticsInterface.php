@@ -20,40 +20,47 @@
  */
 namespace KmbPuppetDb\Service;
 
+use KmbPuppetDb\Query;
+
 interface ReportStatisticsInterface
 {
     /**
      * Get all statistics as array.
      *
+     * @param Query|array $query
      * @return array
      */
-    public function getAllAsArray();
+    public function getAllAsArray($query = null);
 
     /**
      * Get success count.
      *
+     * @param Query|array $query
      * @return int
      */
-    public function getSuccessCount();
+    public function getSuccessCount($query = null);
 
     /**
      * Get failures count.
      *
+     * @param Query|array $query
      * @return int
      */
-    public function getFailuresCount();
+    public function getFailuresCount($query = null);
 
     /**
      * Get skips count.
      *
+     * @param Query|array $query
      * @return int
      */
-    public function getSkipsCount();
+    public function getSkipsCount($query = null);
 
     /**
      * Get noops count.
      *
+     * @param Query|array $query
      * @return int
      */
-    public function getNoopsCount();
+    public function getNoopsCount($query = null);
 }

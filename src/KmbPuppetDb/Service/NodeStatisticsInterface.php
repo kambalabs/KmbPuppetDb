@@ -20,68 +20,79 @@
  */
 namespace KmbPuppetDb\Service;
 
+use KmbPuppetDb\Query;
+
 interface NodeStatisticsInterface
 {
     /**
      * Get unchanged nodes count.
      *
+     * @param Query|array $query
      * @return int
      */
-    public function getUnchangedCount();
+    public function getUnchangedCount($query = null);
 
     /**
      * Get changed nodes count.
      *
+     * @param Query|array $query
      * @return int
      */
-    public function getChangedCount();
+    public function getChangedCount($query = null);
 
     /**
      * Get failed nodes count.
      *
+     * @param Query|array $query
      * @return int
      */
-    public function getFailedCount();
+    public function getFailedCount($query = null);
 
     /**
      * Get nodes count.
      *
+     * @param Query|array $query
      * @return int
      */
-    public function getNodesCount();
+    public function getNodesCount($query = null);
 
     /**
      * Get nodes count grouped by Operating System.
      *
+     * @param Query|array $query
      * @return array
      */
-    public function getNodesCountByOS();
+    public function getNodesCountByOS($query = null);
 
     /**
      * Get nodes percentage grouped by Operating System.
      *
+     * @param Query|array $query
      * @return array
      */
-    public function getNodesPercentageByOS();
+    public function getNodesPercentageByOS($query = null);
 
     /**
      * Get OS count.
      *
+     * @param Query|array $query
      * @return int
      */
-    public function getOSCount();
+    public function getOSCount($query = null);
 
     /**
      * Get recently rebooted nodes.
      *
+     * @param Query|array $query
      * @return array
      */
-    public function getRecentlyRebootedNodes();
+    public function getRecentlyRebootedNodes($query = null);
 
     /**
      * Get all statistics as array.
      *
+     * @param Query|array $query
      * @return array
      */
-    public function getAllAsArray();
+    public function getAllAsArray($query = null);
 }

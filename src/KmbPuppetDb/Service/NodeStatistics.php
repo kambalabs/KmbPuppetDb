@@ -21,6 +21,7 @@
 namespace KmbPuppetDb\Service;
 
 use KmbPuppetDb\Model;
+use KmbPuppetDb\Query;
 use KmbPuppetDb\Service;
 
 class NodeStatistics implements NodeStatisticsInterface
@@ -73,100 +74,109 @@ class NodeStatistics implements NodeStatisticsInterface
     /**
      * Get unchanged nodes count.
      *
+     * @param Query|array $query
      * @return int
      */
-    public function getUnchangedCount()
+    public function getUnchangedCount($query = null)
     {
-        return $this->getStatistic('unchangedCount');
+        return $this->getStatistic('unchangedCount', $query);
     }
 
     /**
      * Get changed nodes count.
      *
+     * @param Query|array $query
      * @return int
      */
-    public function getChangedCount()
+    public function getChangedCount($query = null)
     {
-        return $this->getStatistic('changedCount');
+        return $this->getStatistic('changedCount', $query);
     }
 
     /**
      * Get failed nodes count.
      *
+     * @param Query|array $query
      * @return int
      */
-    public function getFailedCount()
+    public function getFailedCount($query = null)
     {
-        return $this->getStatistic('failedCount');
+        return $this->getStatistic('failedCount', $query);
     }
 
     /**
      * Get nodes count.
      *
+     * @param Query|array $query
      * @return int
      */
-    public function getNodesCount()
+    public function getNodesCount($query = null)
     {
-        return $this->getStatistic('nodesCount');
+        return $this->getStatistic('nodesCount', $query);
     }
 
     /**
      * Get nodes count grouped by Operating System.
      *
+     * @param Query|array $query
      * @return array
      */
-    public function getNodesCountByOS()
+    public function getNodesCountByOS($query = null)
     {
-        return $this->getStatistic('nodesCountByOS');
+        return $this->getStatistic('nodesCountByOS', $query);
     }
 
     /**
      * Get nodes percentage grouped by Operating System.
      *
+     * @param Query|array $query
      * @return array
      */
-    public function getNodesPercentageByOS()
+    public function getNodesPercentageByOS($query = null)
     {
-        return $this->getStatistic('nodesPercentageByOS');
+        return $this->getStatistic('nodesPercentageByOS', $query);
     }
 
     /**
      * Get OS count.
      *
+     * @param Query|array $query
      * @return int
      */
-    public function getOSCount()
+    public function getOSCount($query = null)
     {
-        return $this->getStatistic('osCount');
+        return $this->getStatistic('osCount', $query);
     }
 
     /**
      * Get recently rebooted nodes.
      *
+     * @param Query|array $query
      * @return array
      */
-    public function getRecentlyRebootedNodes()
+    public function getRecentlyRebootedNodes($query = null)
     {
-        return $this->getStatistic('recentlyRebootedNodes');
+        return $this->getStatistic('recentlyRebootedNodes', $query);
     }
 
     /**
      * Get all statistics as array.
      *
+     * @param Query|array $query
      * @return array
      */
-    public function getAllAsArray()
+    public function getAllAsArray($query = null)
     {
-        return array(
-            'unchangedCount' => $this->getUnchangedCount(),
-            'changedCount' => $this->getChangedCount(),
-            'failedCount' => $this->getFailedCount(),
-            'nodesCount' => $this->getNodesCount(),
-            'nodesCountByOS' => $this->getNodesCountByOS(),
-            'nodesPercentageByOS' => $this->getNodesPercentageByOS(),
-            'osCount' => $this->getOSCount(),
-            'recentlyRebootedNodes' => $this->getRecentlyRebootedNodes(),
-        );
+        return [
+            'unchangedCount' => $this->getUnchangedCount($query),
+            'changedCount' => $this->getChangedCount($query),
+            'failedCount' => $this->getFailedCount($query),
+            'nodesCount' => $this->getNodesCount($query),
+            'nodesCountByOS' => $this->getNodesCountByOS($query),
+            'nodesPercentageByOS' => $this->getNodesPercentageByOS($query),
+            'osCount' => $this->getOSCount($query),
+            'recentlyRebootedNodes' => $this->getRecentlyRebootedNodes($query),
+        ];
     }
 
     /**
@@ -193,28 +203,31 @@ class NodeStatistics implements NodeStatisticsInterface
 
     /**
      * @param $statistic
+     * @param Query|array $query
      * @return mixed
      */
-    protected function getStatistic($statistic)
+    protected function getStatistic($statistic, $query = null)
     {
         if ($this->$statistic == null) {
-            $this->processStatistics();
+            $this->processStatistics($query);
         }
         return $this->$statistic;
     }
 
     /**
      * Browse all nodes and process all the statistics
+     *
+     * @param Query|array $query
      */
-    protected function processStatistics()
+    protected function processStatistics($query = null)
     {
         $this->unchangedCount = 0;
         $this->changedCount = 0;
         $this->failedCount = 0;
-        $this->nodesCountByOS = array();
-        $this->nodesPercentageByOS = array();
-        $this->recentlyRebootedNodes = array();
-        $nodes = $this->getNodeService()->getAll();
+        $this->nodesCountByOS = [];
+        $this->nodesPercentageByOS = [];
+        $this->recentlyRebootedNodes = [];
+        $nodes = $this->getNodeService()->getAll($query);
         $this->nodesCount = count($nodes);
         foreach ($nodes as $node) {
             /** @var Model\Node $node */

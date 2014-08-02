@@ -22,30 +22,24 @@ namespace KmbPuppetDb\Model;
 
 class NodesCollection implements \Iterator, \Countable
 {
-    /**
-     * @var int
-     */
+    /** @var int */
     protected $index = 0;
 
-    /**
-     * @var array
-     */
-    protected $nodes = array();
+    /** @var array */
+    protected $data = [];
 
-    /**
-     * @var int
-     */
+    /** @var int */
     protected $total;
 
     /**
-     * @param array $nodes
+     * @param array $data
      * @param int   $total
      * @return NodesCollection
      */
-    public static function factory(array $nodes, $total = null)
+    public static function factory(array $data, $total = null)
     {
         $collection = new NodesCollection();
-        $collection->setNodes($nodes);
+        $collection->setData($data);
         $collection->setTotal($total);
         return $collection;
     }
@@ -59,7 +53,7 @@ class NodesCollection implements \Iterator, \Countable
      */
     public function current()
     {
-        return $this->nodes[$this->index];
+        return $this->data[$this->index];
     }
 
     /**
@@ -96,7 +90,7 @@ class NodesCollection implements \Iterator, \Countable
      */
     public function valid()
     {
-        return isset($this->nodes[$this->index]);
+        return isset($this->data[$this->index]);
     }
 
     /**
@@ -123,28 +117,28 @@ class NodesCollection implements \Iterator, \Countable
      */
     public function count()
     {
-        return count($this->nodes);
+        return count($this->data);
     }
 
     /**
-     * Get Nodes.
+     * Get data.
      *
      * @return array
      */
-    public function getNodes()
+    public function getData()
     {
-        return $this->nodes;
+        return $this->data;
     }
 
     /**
-     * Set Nodes.
+     * Set data.
      *
-     * @param array $nodes
+     * @param array $data
      * @return NodesCollection
      */
-    public function setNodes($nodes)
+    public function setData($data)
     {
-        $this->nodes = $nodes;
+        $this->data = $data;
         return $this;
     }
 
@@ -176,7 +170,7 @@ class NodesCollection implements \Iterator, \Countable
      */
     public function getNodeByName($nodeName)
     {
-        foreach ($this->nodes as $node) {
+        foreach ($this->data as $node) {
             /** @var $node NodeInterface */
             if ($node->getName() === $nodeName) {
                 return $node;
@@ -191,6 +185,6 @@ class NodesCollection implements \Iterator, \Countable
      */
     public function getNodeByIndex($index)
     {
-        return $this->nodes[$index];
+        return $this->data[$index];
     }
 }
