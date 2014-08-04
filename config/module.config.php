@@ -16,5 +16,9 @@ return [
             'KmbPuppetDb\Service\ReportStatistics' => 'KmbPuppetDb\Service\ReportStatisticsFactory',
             'KmbPuppetDb\Service\FactNames' => 'KmbPuppetDb\Service\FactNamesFactory',
         ],
+        'aliases' => [
+            'nodeStatisticsService' => 'KmbPuppetDb\Service\NodeStatistics',
+            'reportStatisticsService' => 'KmbPuppetDb\Service\ReportStatistics',
+        ],
     ],
 ];
