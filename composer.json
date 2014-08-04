@@ -17,7 +17,8 @@
         }
     ],
     "require": {
-        "kambalabs/kmb-base": "dev-master"
+        "kambalabs/kmb-base": "dev-master",
+        "kambalabs/kmb-domain": "dev-master"
     },
     "require-dev": {
         "phpunit/PHPUnit": "3.7.*",

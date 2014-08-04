@@ -35,9 +35,14 @@ class ModuleOptions extends AbstractOptions implements ClientOptionsInterface, N
     protected $baseUri = 'https://localhost:8081';
 
     /**
+     * @var string
+     */
+    protected $apiVersion = 'v3';
+
+    /**
      * @var array
      */
-    protected $httpOptions = array();
+    protected $httpOptions = [];
 
     /**
      * @var string
@@ -60,16 +65,6 @@ class ModuleOptions extends AbstractOptions implements ClientOptionsInterface, N
     protected $reportHydratorClass = 'KmbPuppetDb\Model\ReportHydrator';
 
     /**
-     * Get PuppetDB base URI.
-     *
-     * @return string
-     */
-    public function getBaseUri()
-    {
-        return $this->baseUri;
-    }
-
-    /**
      * Set PuppetDB base URI.
      *
      * @param $baseUri
@@ -82,13 +77,35 @@ class ModuleOptions extends AbstractOptions implements ClientOptionsInterface, N
     }
 
     /**
-     * Get HTTP client options.
+     * Get PuppetDB base URI.
      *
-     * @return array
+     * @return string
      */
-    public function getHttpOptions()
+    public function getBaseUri()
     {
-        return $this->httpOptions;
+        return $this->baseUri;
+    }
+
+    /**
+     * Set ApiVersion.
+     *
+     * @param string $apiVersion
+     * @return ModuleOptions
+     */
+    public function setApiVersion($apiVersion)
+    {
+        $this->apiVersion = $apiVersion;
+        return $this;
+    }
+
+    /**
+     * Get ApiVersion.
+     *
+     * @return string
+     */
+    public function getApiVersion()
+    {
+        return $this->apiVersion;
     }
 
     /**
@@ -105,13 +122,13 @@ class ModuleOptions extends AbstractOptions implements ClientOptionsInterface, N
     }
 
     /**
-     * Get node entity class name.
+     * Get HTTP client options.
      *
-     * @return string
+     * @return array
      */
-    public function getNodeEntityClass()
+    public function getHttpOptions()
     {
-        return $this->nodeEntityClass;
+        return $this->httpOptions;
     }
 
     /**
@@ -127,13 +144,13 @@ class ModuleOptions extends AbstractOptions implements ClientOptionsInterface, N
     }
 
     /**
-     * Get node hydrator class name.
+     * Get node entity class name.
      *
      * @return string
      */
-    public function getNodeHydratorClass()
+    public function getNodeEntityClass()
     {
-        return $this->nodeHydratorClass;
+        return $this->nodeEntityClass;
     }
 
     /**
@@ -149,13 +166,13 @@ class ModuleOptions extends AbstractOptions implements ClientOptionsInterface, N
     }
 
     /**
-     * Get report entity class name.
+     * Get node hydrator class name.
      *
      * @return string
      */
-    public function getReportEntityClass()
+    public function getNodeHydratorClass()
     {
-        return $this->reportEntityClass;
+        return $this->nodeHydratorClass;
     }
 
     /**
@@ -171,13 +188,13 @@ class ModuleOptions extends AbstractOptions implements ClientOptionsInterface, N
     }
 
     /**
-     * Get report hydrator class name.
+     * Get report entity class name.
      *
      * @return string
      */
-    public function getReportHydratorClass()
+    public function getReportEntityClass()
     {
-        return $this->reportHydratorClass;
+        return $this->reportEntityClass;
     }
 
     /**
@@ -190,5 +207,15 @@ class ModuleOptions extends AbstractOptions implements ClientOptionsInterface, N
     {
         $this->reportHydratorClass = $reportHydratorClass;
         return $this;
+    }
+
+    /**
+     * Get report hydrator class name.
+     *
+     * @return string
+     */
+    public function getReportHydratorClass()
+    {
+        return $this->reportHydratorClass;
     }
 }

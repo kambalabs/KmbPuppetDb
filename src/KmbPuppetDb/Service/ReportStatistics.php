@@ -21,7 +21,7 @@
 namespace KmbPuppetDb\Service;
 
 use KmbPuppetDb\Model;
-use KmbPuppetDb\Query;
+use KmbPuppetDb\Query\Query;
 use KmbPuppetDb\Service;
 
 class ReportStatistics implements ReportStatisticsInterface
@@ -54,7 +54,7 @@ class ReportStatistics implements ReportStatisticsInterface
     /**
      * Get skips count.
      *
-     * @param Query|array $query
+     * @param \KmbPuppetDb\Query\Query|array $query
      * @return int
      */
     public function getSkipsCount($query = null)
@@ -98,7 +98,7 @@ class ReportStatistics implements ReportStatisticsInterface
     /**
      * Get all statistics as array.
      *
-     * @param Query|array $query
+     * @param \KmbPuppetDb\Query\Query|array $query
      * @return array
      */
     public function getAllAsArray($query = null)
@@ -149,7 +149,7 @@ class ReportStatistics implements ReportStatisticsInterface
     /**
      * Browse all reports and process all the statistics
      *
-     * @param Query|array $query
+     * @param \KmbPuppetDb\Query\Query|array $query
      */
     protected function processStatistics($query = null)
     {

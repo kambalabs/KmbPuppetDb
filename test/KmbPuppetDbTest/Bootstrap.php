@@ -35,6 +35,7 @@ class Bootstrap extends AbstractBootstrap
                     ),
                 ),
                 'modules' => array(
+                    'KmbDomain',
                     'KmbPuppetDb'
                 )
             )

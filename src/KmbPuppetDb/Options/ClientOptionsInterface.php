@@ -39,6 +39,21 @@ interface ClientOptionsInterface
     public function setBaseUri($baseUri);
 
     /**
+     * Set ApiVersion.
+     *
+     * @param string $apiVersion
+     * @return ModuleOptions
+     */
+    public function setApiVersion($apiVersion);
+
+    /**
+     * Get ApiVersion.
+     *
+     * @return string
+     */
+    public function getApiVersion();
+
+    /**
      * Get HTTP client options.
      *
      * @return array

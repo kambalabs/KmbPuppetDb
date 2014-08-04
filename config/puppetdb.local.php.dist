@@ -13,6 +13,11 @@ return [
         //'base_uri' => 'https://localhost:8081/',
 
         /**
+         * Puppet DB API version
+         */
+        //'api_version' => 'v3',
+
+        /**
          * Http client options
          *
          * See http://framework.zend.com/manual/2.3/en/modules/zend.http.client.html#configuration

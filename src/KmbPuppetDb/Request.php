@@ -20,10 +20,10 @@
  */
 namespace KmbPuppetDb;
 
+use KmbPuppetDb\Query\Query;
+
 class Request
 {
-    const API_VERSION = 'v3';
-
     /** @var string */
     protected $uri;
 
@@ -100,7 +100,7 @@ class Request
             $queryString = '?' . implode('&', $params);
         }
 
-        return '/' . static::API_VERSION . '/' . ltrim($this->getUri(), '/') . $queryString;
+        return '/' . ltrim($this->getUri(), '/') . $queryString;
     }
 
     /**

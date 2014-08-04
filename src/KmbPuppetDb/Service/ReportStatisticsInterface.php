@@ -20,7 +20,7 @@
  */
 namespace KmbPuppetDb\Service;
 
-use KmbPuppetDb\Query;
+use KmbPuppetDb\Query\Query;
 
 interface ReportStatisticsInterface
 {

@@ -34,6 +34,6 @@ class ModuleOptionsFactory implements FactoryInterface
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
         $config = $serviceLocator->get('Config');
-        return new ModuleOptions(isset($config['puppetdb']) ? $config['puppetdb'] : array());
+        return new ModuleOptions(isset($config['puppetdb']) ? $config['puppetdb'] : []);
     }
 }

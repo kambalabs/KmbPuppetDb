@@ -21,7 +21,7 @@
 namespace KmbPuppetDb\Service;
 
 use KmbPuppetDb\Model;
-use KmbPuppetDb\Query;
+use KmbPuppetDb\Query\Query;
 use KmbPuppetDb\Service;
 
 class NodeStatistics implements NodeStatisticsInterface
@@ -74,7 +74,7 @@ class NodeStatistics implements NodeStatisticsInterface
     /**
      * Get unchanged nodes count.
      *
-     * @param Query|array $query
+     * @param \KmbPuppetDb\Query\Query|array $query
      * @return int
      */
     public function getUnchangedCount($query = null)
@@ -85,7 +85,7 @@ class NodeStatistics implements NodeStatisticsInterface
     /**
      * Get changed nodes count.
      *
-     * @param Query|array $query
+     * @param \KmbPuppetDb\Query\Query|array $query
      * @return int
      */
     public function getChangedCount($query = null)
@@ -96,7 +96,7 @@ class NodeStatistics implements NodeStatisticsInterface
     /**
      * Get failed nodes count.
      *
-     * @param Query|array $query
+     * @param \KmbPuppetDb\Query\Query|array $query
      * @return int
      */
     public function getFailedCount($query = null)
@@ -107,7 +107,7 @@ class NodeStatistics implements NodeStatisticsInterface
     /**
      * Get nodes count.
      *
-     * @param Query|array $query
+     * @param \KmbPuppetDb\Query\Query|array $query
      * @return int
      */
     public function getNodesCount($query = null)
@@ -118,7 +118,7 @@ class NodeStatistics implements NodeStatisticsInterface
     /**
      * Get nodes count grouped by Operating System.
      *
-     * @param Query|array $query
+     * @param \KmbPuppetDb\Query\Query|array $query
      * @return array
      */
     public function getNodesCountByOS($query = null)
@@ -129,7 +129,7 @@ class NodeStatistics implements NodeStatisticsInterface
     /**
      * Get nodes percentage grouped by Operating System.
      *
-     * @param Query|array $query
+     * @param \KmbPuppetDb\Query\Query|array $query
      * @return array
      */
     public function getNodesPercentageByOS($query = null)
@@ -140,7 +140,7 @@ class NodeStatistics implements NodeStatisticsInterface
     /**
      * Get OS count.
      *
-     * @param Query|array $query
+     * @param \KmbPuppetDb\Query\Query|array $query
      * @return int
      */
     public function getOSCount($query = null)
@@ -151,7 +151,7 @@ class NodeStatistics implements NodeStatisticsInterface
     /**
      * Get recently rebooted nodes.
      *
-     * @param Query|array $query
+     * @param \KmbPuppetDb\Query\Query|array $query
      * @return array
      */
     public function getRecentlyRebootedNodes($query = null)
@@ -162,7 +162,7 @@ class NodeStatistics implements NodeStatisticsInterface
     /**
      * Get all statistics as array.
      *
-     * @param Query|array $query
+     * @param \KmbPuppetDb\Query\Query|array $query
      * @return array
      */
     public function getAllAsArray($query = null)
@@ -203,7 +203,7 @@ class NodeStatistics implements NodeStatisticsInterface
 
     /**
      * @param $statistic
-     * @param Query|array $query
+     * @param \KmbPuppetDb\Query\Query|array $query
      * @return mixed
      */
     protected function getStatistic($statistic, $query = null)
@@ -217,7 +217,7 @@ class NodeStatistics implements NodeStatisticsInterface
     /**
      * Browse all nodes and process all the statistics
      *
-     * @param Query|array $query
+     * @param \KmbPuppetDb\Query\Query|array $query
      */
     protected function processStatistics($query = null)
     {

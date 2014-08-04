@@ -20,14 +20,14 @@
  */
 namespace KmbPuppetDb\Service;
 
-use KmbPuppetDb\Query;
+use KmbPuppetDb\Query\Query;
 
 interface NodeStatisticsInterface
 {
     /**
      * Get unchanged nodes count.
      *
-     * @param Query|array $query
+     * @param \KmbPuppetDb\Query\Query|array $query
      * @return int
      */
     public function getUnchangedCount($query = null);
@@ -35,7 +35,7 @@ interface NodeStatisticsInterface
     /**
      * Get changed nodes count.
      *
-     * @param Query|array $query
+     * @param \KmbPuppetDb\Query\Query|array $query
      * @return int
      */
     public function getChangedCount($query = null);
@@ -43,7 +43,7 @@ interface NodeStatisticsInterface
     /**
      * Get failed nodes count.
      *
-     * @param Query|array $query
+     * @param \KmbPuppetDb\Query\Query|array $query
      * @return int
      */
     public function getFailedCount($query = null);
@@ -51,7 +51,7 @@ interface NodeStatisticsInterface
     /**
      * Get nodes count.
      *
-     * @param Query|array $query
+     * @param \KmbPuppetDb\Query\Query|array $query
      * @return int
      */
     public function getNodesCount($query = null);
@@ -59,7 +59,7 @@ interface NodeStatisticsInterface
     /**
      * Get nodes count grouped by Operating System.
      *
-     * @param Query|array $query
+     * @param \KmbPuppetDb\Query\Query|array $query
      * @return array
      */
     public function getNodesCountByOS($query = null);
@@ -67,7 +67,7 @@ interface NodeStatisticsInterface
     /**
      * Get nodes percentage grouped by Operating System.
      *
-     * @param Query|array $query
+     * @param \KmbPuppetDb\Query\Query|array $query
      * @return array
      */
     public function getNodesPercentageByOS($query = null);
@@ -75,7 +75,7 @@ interface NodeStatisticsInterface
     /**
      * Get OS count.
      *
-     * @param Query|array $query
+     * @param \KmbPuppetDb\Query\Query|array $query
      * @return int
      */
     public function getOSCount($query = null);
@@ -83,7 +83,7 @@ interface NodeStatisticsInterface
     /**
      * Get recently rebooted nodes.
      *
-     * @param Query|array $query
+     * @param \KmbPuppetDb\Query\Query|array $query
      * @return array
      */
     public function getRecentlyRebootedNodes($query = null);
@@ -91,7 +91,7 @@ interface NodeStatisticsInterface
     /**
      * Get all statistics as array.
      *
-     * @param Query|array $query
+     * @param \KmbPuppetDb\Query\Query|array $query
      * @return array
      */
     public function getAllAsArray($query = null);

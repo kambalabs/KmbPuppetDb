@@ -10,6 +10,7 @@ return [
         'factories' => [
             'KmbPuppetDb\Options\ModuleOptions' => 'KmbPuppetDb\Options\ModuleOptionsFactory',
             'KmbPuppetDb\Client' => 'KmbPuppetDb\ClientFactory',
+            'KmbPuppetDb\Query\NodesEnvironmentsQueryBuilder' => 'KmbPuppetDb\Query\NodesEnvironmentsQueryBuilderFactory',
             'KmbPuppetDb\Service\Node' => 'KmbPuppetDb\Service\NodeFactory',
             'KmbPuppetDb\Service\NodeStatistics' => 'KmbPuppetDb\Service\NodeStatisticsFactory',
             'KmbPuppetDb\Service\Report' => 'KmbPuppetDb\Service\ReportFactory',

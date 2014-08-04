@@ -2,7 +2,7 @@
 namespace KmbPuppetDbTest;
 
 use KmbPuppetDb\OrderBy;
-use KmbPuppetDb\Query;
+use KmbPuppetDb\Query\Query;
 use KmbPuppetDb\Request;
 
 class RequestTest extends \PHPUnit_Framework_TestCase
@@ -12,7 +12,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
     {
         $request = new Request('/fact-names');
 
-        $this->assertEquals('/v3/fact-names', $request->getFullUri());
+        $this->assertEquals('/fact-names', $request->getFullUri());
     }
 
     /** @test */
@@ -20,7 +20,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
     {
         $request = new Request('fact-names');
 
-        $this->assertEquals('/v3/fact-names', $request->getFullUri());
+        $this->assertEquals('/fact-names', $request->getFullUri());
     }
 
     /** @test */
@@ -32,7 +32,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
             'Linux',
         ));
 
-        $this->assertEquals('/v3/nodes?query=%5B%22%3D%22%2C%20%5B%22fact%22%2C%20%22kernel%22%5D%2C%20%22Linux%22%5D', $request->getFullUri());
+        $this->assertEquals('/nodes?query=%5B%22%3D%22%2C%20%5B%22fact%22%2C%20%22kernel%22%5D%2C%20%22Linux%22%5D', $request->getFullUri());
     }
 
     /** @test */
@@ -44,7 +44,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
             'Linux',
         )));
 
-        $this->assertEquals('/v3/nodes?query=%5B%22%3D%22%2C%20%5B%22fact%22%2C%20%22kernel%22%5D%2C%20%22Linux%22%5D', $request->getFullUri());
+        $this->assertEquals('/nodes?query=%5B%22%3D%22%2C%20%5B%22fact%22%2C%20%22kernel%22%5D%2C%20%22Linux%22%5D', $request->getFullUri());
     }
 
     /** @test */
@@ -61,7 +61,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
             ),
         ));
 
-        $this->assertEquals('/v3/nodes?order-by=%5B%7B%22field%22%3A%20%22value%22%2C%20%22order%22%3A%20%22desc%22%7D%2C%20%7B%22field%22%3A%20%22name%22%2C%20%22order%22%3A%20%22asc%22%7D%5D', $request->getFullUri());
+        $this->assertEquals('/nodes?order-by=%5B%7B%22field%22%3A%20%22value%22%2C%20%22order%22%3A%20%22desc%22%7D%2C%20%7B%22field%22%3A%20%22name%22%2C%20%22order%22%3A%20%22asc%22%7D%5D', $request->getFullUri());
     }
 
     /** @test */
@@ -78,7 +78,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
             ),
         )));
 
-        $this->assertEquals('/v3/nodes?order-by=%5B%7B%22field%22%3A%20%22value%22%2C%20%22order%22%3A%20%22desc%22%7D%2C%20%7B%22field%22%3A%20%22name%22%2C%20%22order%22%3A%20%22asc%22%7D%5D', $request->getFullUri());
+        $this->assertEquals('/nodes?order-by=%5B%7B%22field%22%3A%20%22value%22%2C%20%22order%22%3A%20%22desc%22%7D%2C%20%7B%22field%22%3A%20%22name%22%2C%20%22order%22%3A%20%22asc%22%7D%5D', $request->getFullUri());
     }
 
     /** @test */
@@ -102,7 +102,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
             )
         );
 
-        $this->assertEquals('/v3/nodes?query=%5B%22%3D%22%2C%20%5B%22fact%22%2C%20%22kernel%22%5D%2C%20%22Linux%22%5D&order-by=%5B%7B%22field%22%3A%20%22value%22%2C%20%22order%22%3A%20%22desc%22%7D%2C%20%7B%22field%22%3A%20%22name%22%2C%20%22order%22%3A%20%22asc%22%7D%5D', $request->getFullUri());
+        $this->assertEquals('/nodes?query=%5B%22%3D%22%2C%20%5B%22fact%22%2C%20%22kernel%22%5D%2C%20%22Linux%22%5D&order-by=%5B%7B%22field%22%3A%20%22value%22%2C%20%22order%22%3A%20%22desc%22%7D%2C%20%7B%22field%22%3A%20%22name%22%2C%20%22order%22%3A%20%22asc%22%7D%5D', $request->getFullUri());
     }
 
     /** @test */
@@ -111,7 +111,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
         $request = new Request('/nodes');
         $request->setPaging(10, 20);
 
-        $this->assertEquals('/v3/nodes?offset=10&limit=20&include-total=true', $request->getFullUri());
+        $this->assertEquals('/nodes?offset=10&limit=20&include-total=true', $request->getFullUri());
     }
 
     /** @test */
@@ -120,7 +120,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
         $request = new Request('/nodes');
         $request->setPaging(null, null);
 
-        $this->assertEquals('/v3/nodes', $request->getFullUri());
+        $this->assertEquals('/nodes', $request->getFullUri());
     }
 
     /** @test */
@@ -129,6 +129,6 @@ class RequestTest extends \PHPUnit_Framework_TestCase
         $request = new Request('/nodes');
         $request->setSummarizeBy('certname');
 
-        $this->assertEquals('/v3/nodes?summarize-by=certname', $request->getFullUri());
+        $this->assertEquals('/nodes?summarize-by=certname', $request->getFullUri());
     }
 }

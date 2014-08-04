@@ -3,6 +3,7 @@ namespace KmbPuppetDbTest;
 
 use KmbPuppetDb\Exception\InvalidArgumentException;
 use KmbPuppetDb;
+use KmbPuppetDb\Options\ModuleOptions;
 use KmbPuppetDb\Exception\RuntimeException;
 use Zend\Http\Request;
 use Zend\Log\Logger;
@@ -25,14 +26,9 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     {
         $this->fakeHttpClient = new FakeHttpClient(static::FAKE_DATETIME);
 
-        $options = $this->getMock('KmbPuppetDb\Options\ClientOptionsInterface');
-        $options->expects($this->any())
-            ->method('getBaseUri')
-            ->will($this->returnValue('https://localhost:8081/'));
-
         $this->puppetDbClient = new KmbPuppetDb\Client();
         $this->puppetDbClient->setHttpClient($this->fakeHttpClient);
-        $this->puppetDbClient->setOptions($options);
+        $this->puppetDbClient->setOptions(new ModuleOptions());
         $this->puppetDbClient->setLogger(new Logger(array('writers' => array('null' => array('name' => 'null')))));
     }
 
