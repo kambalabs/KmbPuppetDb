@@ -17,6 +17,6 @@ class ReportsV3EnvironmentsQueryBuilderTest extends \PHPUnit_Framework_TestCase
 
         $query = $queryBuilder->build([$environment1, $environment2]);
 
-        $this->assertEquals('[]', (string)$query);
+        $this->assertEquals('', (string)$query);
     }
 }

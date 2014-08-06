@@ -10,7 +10,7 @@ class QueryTest extends \PHPUnit_Framework_TestCase
     {
         $query = new Query([]);
 
-        $this->assertEquals('[]', (string)$query);
+        $this->assertEquals('', (string)$query);
     }
 
     /** @test */
@@ -31,6 +31,26 @@ class QueryTest extends \PHPUnit_Framework_TestCase
                 ['fact', 'kernelversion'],
                 '3.2.0'
             ],
+            [
+                '=',
+                ['fact', 'architecture'],
+                'amd64'
+            ],
+        ]);
+
+        $this->assertEquals('["AND", ["=", ["fact", "kernelversion"], "3.2.0"], ["=", ["fact", "architecture"], "amd64"]]', (string)$query);
+    }
+
+    /** @test */
+    public function canConvertMultipleLevelQueryWithNestedQueryToString()
+    {
+        $query = new Query([
+            'AND',
+            new Query([
+                '=',
+                ['fact', 'kernelversion'],
+                '3.2.0'
+            ]),
             [
                 '=',
                 ['fact', 'architecture'],

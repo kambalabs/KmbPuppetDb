@@ -186,7 +186,11 @@ class Request
      */
     public function setQuery($query)
     {
-        $this->query = $query;
+        if ($query instanceof Query) {
+            $this->query = $query->getData();
+        } else {
+            $this->query = $query;
+        }
         return $this;
     }
 

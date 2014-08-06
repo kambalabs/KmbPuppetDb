@@ -26,13 +26,14 @@ abstract class AbstractEnvironmentsQueryBuilder implements EnvironmentsQueryBuil
 {
     /**
      * @param EnvironmentInterface[] $environments
+     * @param string $operator
      * @return Query
      */
-    public function build(array $environments)
+    public function build(array $environments, $operator = '=')
     {
         $data = [];
         foreach ($environments as $environment) {
-            $query = $this->getQuery($environment);
+            $query = $this->getQuery($environment, $operator);
             if ($query) {
                 $data[] = $query;
             }
@@ -47,7 +48,8 @@ abstract class AbstractEnvironmentsQueryBuilder implements EnvironmentsQueryBuil
 
     /**
      * @param EnvironmentInterface $environment
+     * @param string $operator
      * @return array
      */
-    abstract protected function getQuery($environment);
+    abstract protected function getQuery($environment, $operator);
 }

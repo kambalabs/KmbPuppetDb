@@ -26,10 +26,11 @@ class ReportsV4EnvironmentsQueryBuilder extends AbstractEnvironmentsQueryBuilder
 {
     /**
      * @param EnvironmentInterface $environment
+     * @param string $operator
      * @return array
      */
-    protected function getQuery($environment)
+    protected function getQuery($environment, $operator)
     {
-        return ['=', 'environment', $environment->getNormalizedName()];
+        return [$operator, 'environment', $environment->getNormalizedName()];
     }
 }

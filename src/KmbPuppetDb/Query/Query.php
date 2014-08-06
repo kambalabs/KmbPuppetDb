@@ -65,9 +65,11 @@ class Query
     {
         return array_map(
             function ($element) {
-                if (is_array($element)) {
+                if ($element instanceof Query) {
+                    return (string)$element;
+                } elseif (is_array($element)) {
                     $subQuery = new Query($element);
-                    return "$subQuery";
+                    return (string)$subQuery;
                 } elseif (is_bool($element)) {
                     return $element ? 'true' : 'false';
                 }
@@ -83,6 +85,7 @@ class Query
      */
     private function convertQueryDataToString($data)
     {
-        return '[' . implode(', ', $this->processElement($data)) . ']';
+        $body = implode(', ', $this->processElement($data));
+        return empty($body) ? '' : '[' . $body . ']';
     }
 }

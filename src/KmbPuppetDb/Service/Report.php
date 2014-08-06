@@ -21,6 +21,7 @@
 namespace KmbPuppetDb\Service;
 
 use KmbBase\DateTimeFactoryInterface;
+use KmbPuppetDb\Query\Query;
 use KmbPuppetDb\Model;
 use KmbPuppetDb;
 use KmbPuppetDb\Options\ReportServiceOptionsInterface;
@@ -97,14 +98,17 @@ class Report implements ReportInterface
             $offset = $query;
             $query = null;
         }
-        if ($query == null) {
+        if (is_array($query)) {
+            $query = new Query($query);
+        }
+        if ((string)$query == '') {
             $query = $this->getTodayQuery();
         } else {
-            $query = array(
+            $query = [
                 'and',
                 $this->getTodayQuery(),
-                $query
-            );
+                $query->getData()
+            ];
         }
         return $this->getAll($query, $offset, $limit, $orderBy);
     }

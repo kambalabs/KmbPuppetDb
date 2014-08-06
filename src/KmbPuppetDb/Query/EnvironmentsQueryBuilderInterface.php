@@ -26,7 +26,8 @@ interface EnvironmentsQueryBuilderInterface
 {
     /**
      * @param EnvironmentInterface[] $environments
+     * @param string $operator
      * @return Query
      */
-    public function build(array $environments);
+    public function build(array $environments, $operator = '=');
 }

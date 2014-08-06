@@ -27,10 +27,11 @@ class NodesV3EnvironmentsQueryBuilder extends AbstractEnvironmentsQueryBuilder
 {
     /**
      * @param EnvironmentInterface $environment
+     * @param string $operator
      * @return array
      */
-    protected function getQuery($environment)
+    protected function getQuery($environment, $operator)
     {
-        return ['=', ['fact', NodeInterface::ENVIRONMENT_FACT], $environment->getNormalizedName()];
+        return [$operator, ['fact', NodeInterface::ENVIRONMENT_FACT], $environment->getNormalizedName()];
     }
 }
