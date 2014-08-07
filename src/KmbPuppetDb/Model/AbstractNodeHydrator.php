@@ -22,25 +22,30 @@ namespace KmbPuppetDb\Model;
 
 use Zend\Stdlib\Hydrator\HydratorInterface;
 
-class NodeHydrator implements HydratorInterface
+abstract class AbstractNodeHydrator implements HydratorInterface
 {
 
     /**
      * Extract values from an object
      *
-     * @param  object $object
+     * @param  Node $object
      * @return array
      */
     public function extract($object)
     {
+        return [
+            'name' => $object->getName(),
+            'environment' => $object->getEnvironment(),
+            'values' => $object->getFacts(),
+        ];
     }
 
     /**
      * Hydrate $object with the provided $data.
      *
      * @param  array  $data
-     * @param  object $object
-     * @return object
+     * @param  Node $object
+     * @return Node
      */
     public function hydrate(array $data, $object)
     {

@@ -20,6 +20,7 @@
  */
 namespace KmbPuppetDb\Options;
 
+use Traversable;
 use Zend\Stdlib\AbstractOptions;
 
 class ModuleOptions extends AbstractOptions implements ClientOptionsInterface, NodeServiceOptionsInterface, ReportServiceOptionsInterface
@@ -52,7 +53,7 @@ class ModuleOptions extends AbstractOptions implements ClientOptionsInterface, N
     /**
      * @var string
      */
-    protected $nodeHydratorClass = 'KmbPuppetDb\Model\NodeHydrator';
+    protected $nodeHydratorClass;
 
     /**
      * @var string
@@ -63,6 +64,14 @@ class ModuleOptions extends AbstractOptions implements ClientOptionsInterface, N
      * @var string
      */
     protected $reportHydratorClass = 'KmbPuppetDb\Model\ReportHydrator';
+
+    public function __construct($options = null)
+    {
+        parent::__construct($options);
+        if ($this->nodeHydratorClass == null) {
+            $this->setNodeHydratorClass('KmbPuppetDb\Model\Node' . strtoupper($this->apiVersion) . 'Hydrator');
+        }
+    }
 
     /**
      * Set PuppetDB base URI.

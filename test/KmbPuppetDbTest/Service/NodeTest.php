@@ -109,7 +109,7 @@ class NodeTest extends \PHPUnit_Framework_TestCase
     /** @test */
     public function canReplaceFacts()
     {
-        $node = new Model\Node('node1.local', NodeInterface::UNCHANGED, new \DateTime(), ['kmbenv' => 'STABLE_PF1']);
+        $node = new Model\Node('node1.local', NodeInterface::UNCHANGED, new \DateTime(), [], 'STABLE_PF1');
 
         $this->nodeService->replaceFacts($node);
     }

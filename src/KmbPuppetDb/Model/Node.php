@@ -85,9 +85,6 @@ class Node implements NodeInterface
     public function setEnvironment($environment)
     {
         $this->environment = $environment;
-        if ($environment !== null) {
-            $this->addFact(NodeInterface::ENVIRONMENT_FACT, $environment);
-        }
         return $this;
     }
 
@@ -98,9 +95,6 @@ class Node implements NodeInterface
      */
     public function getEnvironment()
     {
-        if ($this->environment === null) {
-            $this->environment = $this->getFact(NodeInterface::ENVIRONMENT_FACT);
-        }
         return $this->environment;
     }
 

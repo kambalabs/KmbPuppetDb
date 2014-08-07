@@ -106,11 +106,7 @@ class Node implements NodeInterface
         $request->setData([
             'command' => 'replace facts',
             'version' => 2,
-            'payload' => [
-                'name' => $node->getName(),
-                'environment' => $node->getFact(Model\NodeInterface::ENVIRONMENT_FACT),
-                'values' => $node->getFacts(),
-            ],
+            'payload' => $this->getNodeHydrator()->extract($node),
         ]);
 
         $response = $this->getPuppetDbClient()->send($request);
