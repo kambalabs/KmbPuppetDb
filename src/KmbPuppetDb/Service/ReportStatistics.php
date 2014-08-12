@@ -140,7 +140,7 @@ class ReportStatistics implements ReportStatisticsInterface
      */
     protected function getStatistic($statistic, $query = null)
     {
-        if ($this->$statistic == null) {
+        if ($this->$statistic === null) {
             $this->processStatistics($query);
         }
         return $this->$statistic;

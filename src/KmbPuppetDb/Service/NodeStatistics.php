@@ -21,7 +21,6 @@
 namespace KmbPuppetDb\Service;
 
 use KmbPuppetDb\Model;
-use KmbPuppetDb\Query\Query;
 use KmbPuppetDb\Service;
 
 class NodeStatistics implements NodeStatisticsInterface
@@ -202,13 +201,13 @@ class NodeStatistics implements NodeStatisticsInterface
     }
 
     /**
-     * @param $statistic
+     * @param                                $statistic
      * @param \KmbPuppetDb\Query\Query|array $query
      * @return mixed
      */
     protected function getStatistic($statistic, $query = null)
     {
-        if ($this->$statistic == null) {
+        if ($this->$statistic === null) {
             $this->processStatistics($query);
         }
         return $this->$statistic;
