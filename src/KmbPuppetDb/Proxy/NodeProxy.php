@@ -1,60 +1,98 @@
 <?php
 /**
  * @copyright Copyright (c) 2014 Orange Applications for Business
- * @link      http://github.com/multimediabs/kamba for the canonical source repository
+ * @link      http://github.com/kambalabs for the sources repositories
  *
- * This file is part of kamba.
+ * This file is part of Kamba.
  *
- * kamba is free software: you can redistribute it and/or modify
+ * Kamba is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2 of the License, or
  * (at your option) any later version.
  *
- * kamba is distributed in the hope that it will be useful,
+ * Kamba is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with kamba.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Kamba.  If not, see <http://www.gnu.org/licenses/>.
  */
-namespace KmbPuppetDb\Model;
+namespace KmbPuppetDb\Proxy;
 
-class Node implements NodeInterface
+use KmbPuppetDb\Model;
+use KmbPuppetDb\Service;
+
+class NodeProxy implements Model\NodeInterface
 {
-    /** @var string */
-    protected $name;
+    /** @var  Service\Node */
+    protected $nodeService;
 
-    /** @var string */
+    /** @var  Model\NodeInterface */
+    protected $node;
+
+    /** @var  string */
     protected $environment;
 
-    /** @var string */
+    /** @var  array */
+    protected $facts;
+
+    /** @var  string */
     protected $status;
 
-    /** @var \DateTime */
-    protected $reportedAt;
-
-    /** @var array */
-    protected $facts = [];
-
-    public function __construct($name = null, $status = null, $reportedAt = null, $facts = [], $environment = null)
+    /**
+     * Set NodeService.
+     *
+     * @param \KmbPuppetDb\Service\Node $nodeService
+     * @return NodeProxy
+     */
+    public function setNodeService($nodeService)
     {
-        $this->setName($name);
-        $this->setStatus($status);
-        $this->setReportedAt($reportedAt);
-        $this->setFacts($facts);
-        $this->setEnvironment($environment);
+        $this->nodeService = $nodeService;
+        return $this;
+    }
+
+    /**
+     * Get NodeService.
+     *
+     * @return \KmbPuppetDb\Service\Node
+     */
+    public function getNodeService()
+    {
+        return $this->nodeService;
+    }
+
+    /**
+     * Set Node.
+     *
+     * @param \KmbPuppetDb\Model\NodeInterface $node
+     * @return NodeProxy
+     */
+    public function setNode($node)
+    {
+        $this->node = $node;
+        return $this;
+    }
+
+    /**
+     * Get Node.
+     *
+     * @return \KmbPuppetDb\Model\NodeInterface
+     */
+    public function getNode()
+    {
+        return $this->node;
     }
 
     /**
      * Set name.
      *
      * @param string $name
-     * @return Node
+     * @return NodeProxy
      */
     public function setName($name)
     {
-        $this->name = $name;
+        $this->node->setName($name);
         return $this;
     }
 
@@ -65,14 +103,14 @@ class Node implements NodeInterface
      */
     public function getName()
     {
-        return $this->name;
+        return $this->node->getName();
     }
 
     /**
      * Set Environment.
      *
      * @param string $environment
-     * @return Node
+     * @return NodeProxy
      */
     public function setEnvironment($environment)
     {
@@ -87,6 +125,9 @@ class Node implements NodeInterface
      */
     public function getEnvironment()
     {
+        if ($this->environment === null) {
+            $this->setEnvironment($this->getFact(Model\NodeInterface::ENVIRONMENT_FACT));
+        }
         return $this->environment;
     }
 
@@ -94,7 +135,7 @@ class Node implements NodeInterface
      * Set facts.
      *
      * @param array $facts
-     * @return Node
+     * @return NodeProxy
      */
     public function setFacts(array $facts)
     {
@@ -107,7 +148,7 @@ class Node implements NodeInterface
      *
      * @param string $name
      * @param string $value
-     * @return Node
+     * @return NodeProxy
      */
     public function addFact($name, $value)
     {
@@ -122,6 +163,9 @@ class Node implements NodeInterface
      */
     public function getFacts()
     {
+        if ($this->facts === null) {
+            $this->setFacts($this->nodeService->getNodeFacts($this->getName()));
+        }
         return $this->facts;
     }
 
@@ -130,7 +174,7 @@ class Node implements NodeInterface
      */
     public function hasFacts()
     {
-        return count($this->facts) > 0;
+        return count($this->getFacts()) > 0;
     }
 
     /**
@@ -141,32 +185,34 @@ class Node implements NodeInterface
      */
     public function hasFact($name)
     {
-        return array_key_exists($name, $this->getFacts());
+        if ($this->hasFacts() && array_key_exists($name, $this->facts)) {
+            return true;
+        }
+        return false;
     }
 
     /**
      * Get the specified fact.
      *
      * @param string $name
-     * @return string
+     * @return array
      */
     public function getFact($name)
     {
         if ($this->hasFact($name)) {
             return $this->facts[$name];
         }
-        return null;
     }
 
     /**
      * Set time of last report.
      *
      * @param \DateTime $reportedAt
-     * @return Node
+     * @return NodeProxy
      */
     public function setReportedAt(\DateTime $reportedAt = null)
     {
-        $this->reportedAt = $reportedAt;
+        $this->node->setReportedAt($reportedAt);
         return $this;
     }
 
@@ -177,14 +223,14 @@ class Node implements NodeInterface
      */
     public function getReportedAt()
     {
-        return $this->reportedAt;
+        return $this->node->getReportedAt();
     }
 
     /**
      * Set status.
      *
      * @param string $status
-     * @return Node
+     * @return NodeProxy
      */
     public function setStatus($status)
     {
@@ -199,6 +245,9 @@ class Node implements NodeInterface
      */
     public function getStatus()
     {
+        if ($this->status === null) {
+            $this->setStatus($this->nodeService->getNodeStatus($this->getName()));
+        }
         return $this->status;
     }
 
@@ -210,6 +259,6 @@ class Node implements NodeInterface
      */
     public function hasStatus($status)
     {
-        return $this->getStatus() == $status;
+        return $this->getStatus() === $status;
     }
 }

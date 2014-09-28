@@ -96,8 +96,52 @@ class Node implements NodeInterface
     }
 
     /**
+     * @param string $nodeName
+     * @return string
+     */
+    public function getNodeStatus($nodeName)
+    {
+        $request = new KmbPuppetDb\Request('/event-counts', array(
+            'and',
+            array('=', 'certname', $nodeName),
+            array('=', 'latest-report?', true),
+        ));
+        $request->setSummarizeBy('certname');
+
+        $response = $this->getPuppetDbClient()->send($request);
+
+        $events = (array)$response->getData();
+        if (empty($events)) {
+            return Model\NodeInterface::UNCHANGED;
+        }
+        if ($events[0]->failures > 0) {
+            return Model\NodeInterface::FAILED;
+        }
+
+        return Model\NodeInterface::CHANGED;
+    }
+
+    /**
+     * @param string $nodeName
+     * @return array
+     */
+    public function getNodeFacts($nodeName)
+    {
+        $request = new KmbPuppetDb\Request("/nodes/$nodeName/facts");
+
+        $response = $this->getPuppetDbClient()->send($request);
+
+        $facts = array();
+        foreach ($response->getData() as $fact) {
+            $facts[$fact->name] = $fact->value;
+        }
+
+        return $facts;
+    }
+
+    /**
      * @param Model\NodeInterface $node
-     * @return NodeInterface
+     * @return Node
      */
     public function replaceFacts(Model\NodeInterface $node)
     {
@@ -182,50 +226,6 @@ class Node implements NodeInterface
     }
 
     /**
-     * @param string $nodeName
-     * @return string
-     */
-    protected function getNodeStatus($nodeName)
-    {
-        $request = new KmbPuppetDb\Request('/event-counts', array(
-            'and',
-            array('=', 'certname', $nodeName),
-            array('=', 'latest-report?', true),
-        ));
-        $request->setSummarizeBy('certname');
-
-        $response = $this->getPuppetDbClient()->send($request);
-
-        $events = (array)$response->getData();
-        if (empty($events)) {
-            return Model\NodeInterface::UNCHANGED;
-        }
-        if ($events[0]->failures > 0) {
-            return Model\NodeInterface::FAILED;
-        }
-
-        return Model\NodeInterface::CHANGED;
-    }
-
-    /**
-     * @param string $nodeName
-     * @return array
-     */
-    protected function getNodeFacts($nodeName)
-    {
-        $request = new KmbPuppetDb\Request("/nodes/$nodeName/facts");
-
-        $response = $this->getPuppetDbClient()->send($request);
-
-        $facts = array();
-        foreach ($response->getData() as $fact) {
-            $facts[$fact->name] = $fact->value;
-        }
-
-        return $facts;
-    }
-
-    /**
      * @return HydratorInterface
      */
     protected function getNodeHydrator()
@@ -247,11 +247,12 @@ class Node implements NodeInterface
         /** @var Model\NodeInterface $node */
         $node = new $nodeEntityClass;
 
-        $data = ArrayUtils::merge((array)$data, array(
-            'status' => $this->getNodeStatus($data->name),
-            'facts' => $this->getNodeFacts($data->name),
-        ));
+        $nodeEntityProxyClass = $this->getOptions()->getNodeEntityProxyClass();
+        /** @var KmbPuppetDb\Proxy\NodeProxy $nodeProxy */
+        $nodeProxy = new $nodeEntityProxyClass;
+        $nodeProxy->setNode($node);
+        $nodeProxy->setNodeService($this);
 
-        return $this->getNodeHydrator()->hydrate($data, $node);
+        return $this->getNodeHydrator()->hydrate((array)$data, $nodeProxy);
     }
 }

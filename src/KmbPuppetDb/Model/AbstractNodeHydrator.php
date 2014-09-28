@@ -24,7 +24,6 @@ use Zend\Stdlib\Hydrator\HydratorInterface;
 
 abstract class AbstractNodeHydrator implements HydratorInterface
 {
-
     /**
      * Extract values from an object
      *
@@ -43,8 +42,8 @@ abstract class AbstractNodeHydrator implements HydratorInterface
     /**
      * Hydrate $object with the provided $data.
      *
-     * @param  array  $data
-     * @param  Node $object
+     * @param  array $data
+     * @param  Node  $object
      * @return Node
      */
     public function hydrate(array $data, $object)
@@ -54,12 +53,6 @@ abstract class AbstractNodeHydrator implements HydratorInterface
         }
         if (isset($data['facts_timestamp'])) {
             $object->setReportedAt(new \DateTime($data['facts_timestamp']));
-        }
-        if (isset($data['status'])) {
-            $object->setStatus($data['status']);
-        }
-        if (isset($data['facts'])) {
-            $object->setFacts($data['facts']);
         }
         return $object;
     }

@@ -38,6 +38,21 @@ interface NodeServiceOptionsInterface
     public function setNodeEntityClass($nodeEntityClass);
 
     /**
+     * Set node entity proxy class name.
+     *
+     * @param string $nodeEntityProxyClass
+     * @return ModuleOptions
+     */
+    public function setNodeEntityProxyClass($nodeEntityProxyClass);
+
+    /**
+     * Get node entity proxy class name.
+     *
+     * @return string
+     */
+    public function getNodeEntityProxyClass();
+
+    /**
      * Get node hydrator class name.
      *
      * @return string

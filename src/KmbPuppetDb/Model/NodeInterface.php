@@ -46,7 +46,7 @@ interface NodeInterface
      * Set Environment.
      *
      * @param string $environment
-     * @return Node
+     * @return NodeInterface
      */
     public function setEnvironment($environment);
 
@@ -80,6 +80,11 @@ interface NodeInterface
      * @return array
      */
     public function getFacts();
+
+    /**
+     * @return bool
+     */
+    public function hasFacts();
 
     /**
      * Determine if the node has the specified fact.

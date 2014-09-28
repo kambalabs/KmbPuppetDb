@@ -8,9 +8,10 @@ use KmbPuppetDb\Model\NodeV3Hydrator;
 class NodeV3HydratorTest extends \PHPUnit_Framework_TestCase
 {
     /** @test */
-    public function canHydrateWithNodeData()
+    public function canHydrate()
     {
         $node = new Node();
+        $node->addFact(NodeInterface::ENVIRONMENT_FACT, 'STABLE_PF1');
         $hydrator = new NodeV3Hydrator();
 
         $hydrator->hydrate([
@@ -23,40 +24,6 @@ class NodeV3HydratorTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals('node1.local', $node->getName());
         $this->assertEquals('2014-01-31 16:01:15.628000', $node->getReportedAt()->format('Y-m-d H:i:s.u'));
-    }
-
-    /** @test */
-    public function canHydrateWithNodeStatus()
-    {
-        $node = new Node();
-        $hydrator = new NodeV3Hydrator();
-
-        $hydrator->hydrate([
-            'status' => NodeInterface::UNCHANGED,
-        ], $node);
-
-        $this->assertEquals(NodeInterface::UNCHANGED, $node->getStatus());
-    }
-
-    /** @test */
-    public function canHydrateWithFacts()
-    {
-        $node = new Node();
-        $hydrator = new NodeV3Hydrator();
-
-        $hydrator->hydrate([
-            'facts' => [
-                NodeInterface::ENVIRONMENT_FACT => 'STABLE_PF1',
-                'uptime_days' => 477,
-                'operatingsystem' => 'Debian',
-            ]
-        ], $node);
-
-        $this->assertEquals([
-            NodeInterface::ENVIRONMENT_FACT => 'STABLE_PF1',
-            'uptime_days' => 477,
-            'operatingsystem' => 'Debian',
-        ], $node->getFacts());
         $this->assertEquals('STABLE_PF1', $node->getEnvironment());
     }
 

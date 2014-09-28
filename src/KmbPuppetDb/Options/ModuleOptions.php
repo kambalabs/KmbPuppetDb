@@ -20,7 +20,6 @@
  */
 namespace KmbPuppetDb\Options;
 
-use Traversable;
 use Zend\Stdlib\AbstractOptions;
 
 class ModuleOptions extends AbstractOptions implements ClientOptionsInterface, NodeServiceOptionsInterface, ReportServiceOptionsInterface
@@ -49,6 +48,11 @@ class ModuleOptions extends AbstractOptions implements ClientOptionsInterface, N
      * @var string
      */
     protected $nodeEntityClass = 'KmbPuppetDb\Model\Node';
+
+    /**
+     * @var string
+     */
+    protected $nodeEntityProxyClass = 'KmbPuppetDb\Proxy\NodeProxy';
 
     /**
      * @var string
@@ -160,6 +164,28 @@ class ModuleOptions extends AbstractOptions implements ClientOptionsInterface, N
     public function getNodeEntityClass()
     {
         return $this->nodeEntityClass;
+    }
+
+    /**
+     * Set node entity proxy class name.
+     *
+     * @param string $nodeEntityProxyClass
+     * @return ModuleOptions
+     */
+    public function setNodeEntityProxyClass($nodeEntityProxyClass)
+    {
+        $this->nodeEntityProxyClass = $nodeEntityProxyClass;
+        return $this;
+    }
+
+    /**
+     * Get node entity proxy class name.
+     *
+     * @return string
+     */
+    public function getNodeEntityProxyClass()
+    {
+        return $this->nodeEntityProxyClass;
     }
 
     /**

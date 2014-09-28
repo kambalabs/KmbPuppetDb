@@ -21,6 +21,7 @@
 namespace KmbPuppetDb\Service;
 
 use KmbPuppetDb\Model;
+use KmbPuppetDb;
 
 interface NodeInterface
 {
@@ -43,6 +44,18 @@ interface NodeInterface
      * @return Model\NodesCollection
      */
     public function getAll($query = null, $offset = null, $limit = null, $orderBy = null);
+
+    /**
+     * @param string $nodeName
+     * @return string
+     */
+    public function getNodeStatus($nodeName);
+
+    /**
+     * @param string $nodeName
+     * @return array
+     */
+    public function getNodeFacts($nodeName);
 
     /**
      * @param Model\NodeInterface $node

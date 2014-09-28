@@ -13,7 +13,7 @@ class NodeTest extends \PHPUnit_Framework_TestCase
 
         $node->addFact('operatingsystem', 'Debian');
 
-        $this->assertEquals(array('operatingsystem' => 'Debian'), $node->getFacts());
+        $this->assertEquals(['operatingsystem' => 'Debian'], $node->getFacts());
     }
 
     /** @test */
