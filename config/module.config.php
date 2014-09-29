@@ -11,6 +11,7 @@ return [
             'KmbPuppetDb\Options\ModuleOptions' => 'KmbPuppetDb\Options\ModuleOptionsFactory',
             'KmbPuppetDb\Client' => 'KmbPuppetDb\ClientFactory',
             'KmbPuppetDb\Query\NodesEnvironmentsQueryBuilder' => 'KmbPuppetDb\Query\NodesEnvironmentsQueryBuilderFactory',
+            'KmbPuppetDb\Query\NodesNamesQueryBuilder' => 'KmbPuppetDb\Query\NodesNamesQueryBuilderFactory',
             'KmbPuppetDb\Query\ReportsEnvironmentsQueryBuilder' => 'KmbPuppetDb\Query\ReportsEnvironmentsQueryBuilderFactory',
             'KmbPuppetDb\Service\Node' => 'KmbPuppetDb\Service\NodeFactory',
             'KmbPuppetDb\Service\NodeStatistics' => 'KmbPuppetDb\Service\NodeStatisticsFactory',

@@ -20,17 +20,12 @@
  */
 namespace KmbPuppetDb\Query;
 
-use KmbDomain\Model\EnvironmentInterface;
-
-class ReportsV4EnvironmentsQueryBuilder extends AbstractQueryBuilder
+interface QueryBuilderInterface
 {
     /**
-     * @param EnvironmentInterface $element
+     * @param array  $elements
      * @param string $operator
-     * @return array
+     * @return Query
      */
-    protected function getQuery($element, $operator)
-    {
-        return [$operator, 'environment', $element->getNormalizedName()];
-    }
+    public function build(array $elements, $operator = '=');
 }

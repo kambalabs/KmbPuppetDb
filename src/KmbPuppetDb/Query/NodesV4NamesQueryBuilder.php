@@ -20,36 +20,17 @@
  */
 namespace KmbPuppetDb\Query;
 
-use KmbDomain\Model\EnvironmentInterface;
-
-abstract class AbstractEnvironmentsQueryBuilder implements EnvironmentsQueryBuilderInterface
+class NodesV4NamesQueryBuilder extends AbstractQueryBuilder
 {
     /**
-     * @param EnvironmentInterface[] $environments
-     * @param string $operator
-     * @return Query
-     */
-    public function build(array $environments, $operator = '=')
-    {
-        $data = [];
-        foreach ($environments as $environment) {
-            $query = $this->getQuery($environment, $operator);
-            if ($query) {
-                $data[] = $query;
-            }
-        }
-        if (count($data) == 1) {
-            $data = $data[0];
-        } elseif (count($data) > 1) {
-            array_unshift($data, 'OR');
-        }
-        return new Query($data);
-    }
-
-    /**
-     * @param EnvironmentInterface $environment
+     * @param string $element
      * @param string $operator
      * @return array
      */
-    abstract protected function getQuery($environment, $operator);
+    protected function getQuery($element, $operator)
+    {
+        if (!empty($element)) {
+            return [$operator, 'name', addslashes($element)];
+        }
+    }
 }

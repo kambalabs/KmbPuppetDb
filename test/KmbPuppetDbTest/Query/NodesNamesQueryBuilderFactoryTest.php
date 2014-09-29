@@ -2,28 +2,28 @@
 namespace KmbPuppetDbTest\Query;
 
 use KmbPuppetDb\Exception\InvalidArgumentException;
-use KmbPuppetDb\Query\NodesEnvironmentsQueryBuilderFactory;
+use KmbPuppetDb\Query\NodesNamesQueryBuilderFactory;
 use KmbPuppetDbTest\Bootstrap;
 
-class NodesEnvironmentsQueryBuilderFactoryTest extends \PHPUnit_Framework_TestCase
+class NodesNamesQueryBuilderFactoryTest extends \PHPUnit_Framework_TestCase
 {
     /** @test */
     public function canCreateServiceV3()
     {
-        $service = Bootstrap::getServiceManager()->get('KmbPuppetDb\Query\NodesEnvironmentsQueryBuilder');
+        $service = Bootstrap::getServiceManager()->get('KmbPuppetDb\Query\NodesNamesQueryBuilder');
 
-        $this->assertInstanceOf('KmbPuppetDb\Query\NodesV3EnvironmentsQueryBuilder', $service);
+        $this->assertInstanceOf('KmbPuppetDb\Query\NodesV3NamesQueryBuilder', $service);
     }
 
     /** @test */
     public function canCreateServiceV4()
     {
         $serviceLocator = $this->getServiceLocator('v4');
-        $factory = new NodesEnvironmentsQueryBuilderFactory();
+        $factory = new NodesNamesQueryBuilderFactory();
 
         $service = $factory->createService($serviceLocator);
 
-        $this->assertInstanceOf('KmbPuppetDb\Query\NodesV4EnvironmentsQueryBuilder', $service);
+        $this->assertInstanceOf('KmbPuppetDb\Query\NodesV4NamesQueryBuilder', $service);
     }
 
     /**
@@ -34,7 +34,7 @@ class NodesEnvironmentsQueryBuilderFactoryTest extends \PHPUnit_Framework_TestCa
     public function cannotCreateServiceWithUnknownVersion()
     {
         $serviceLocator = $this->getServiceLocator('unknown');
-        $factory = new NodesEnvironmentsQueryBuilderFactory();
+        $factory = new NodesNamesQueryBuilderFactory();
 
         $factory->createService($serviceLocator);
     }

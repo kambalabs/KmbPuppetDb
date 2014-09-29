@@ -23,15 +23,15 @@ namespace KmbPuppetDb\Query;
 use KmbDomain\Model\EnvironmentInterface;
 use KmbPuppetDb\Model\NodeInterface;
 
-class NodesV3EnvironmentsQueryBuilder extends AbstractEnvironmentsQueryBuilder
+class NodesV3EnvironmentsQueryBuilder extends AbstractQueryBuilder
 {
     /**
-     * @param EnvironmentInterface $environment
+     * @param EnvironmentInterface $element
      * @param string $operator
      * @return array
      */
-    protected function getQuery($environment, $operator)
+    protected function getQuery($element, $operator)
     {
-        return [$operator, ['fact', NodeInterface::ENVIRONMENT_FACT], $environment->getNormalizedName()];
+        return [$operator, ['fact', NodeInterface::ENVIRONMENT_FACT], $element->getNormalizedName()];
     }
 }

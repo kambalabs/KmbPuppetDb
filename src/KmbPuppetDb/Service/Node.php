@@ -20,14 +20,13 @@
  */
 namespace KmbPuppetDb\Service;
 
-use KmbPuppetDb;
 use KmbPuppetDb\Exception\InvalidArgumentException;
 use KmbPuppetDb\Model;
+use KmbPuppetDb;
 use KmbPuppetDb\Options\NodeServiceOptionsInterface;
 use KmbPuppetDb\Service;
 use Zend\Http;
 use Zend\Log\Logger;
-use Zend\Stdlib\ArrayUtils;
 use Zend\Stdlib\Hydrator\HydratorInterface;
 
 class Node implements NodeInterface

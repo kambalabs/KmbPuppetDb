@@ -68,7 +68,12 @@ class Client implements ClientInterface
         $httpRequest->setHeaders($newHeaders);
 
         $start = microtime(true);
-        $httpResponse = $this->getHttpClient()->send($httpRequest);
+        try {
+            $httpResponse = $this->getHttpClient()->send($httpRequest);
+        } catch (Http\Client\Exception\RuntimeException $exception) {
+            $this->logRequest($start, $exception->getMessage(), $uri);
+            throw new RuntimeException('HTTP connection failed', 0, $exception);
+        }
         $this->logRequest($start, $httpResponse->renderStatusLine(), $uri);
         $body = $httpResponse->getBody();
 
@@ -181,6 +186,6 @@ class Client implements ClientInterface
         $splittedUri = explode('?', $uri);
         $uriToLog = array_shift($splittedUri);
         $this->getLogger()->debug("[$duration ms] [" . $statusLine . "] $uriToLog");
-//        $this->getLogger()->debug("[$duration ms] [" . $statusLine . "] $uri");
+        $this->getLogger()->debug("[$duration ms] [" . $statusLine . "] $uri");
     }
 }
