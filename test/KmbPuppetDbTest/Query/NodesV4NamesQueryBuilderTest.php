@@ -12,7 +12,7 @@ class NodesV4NamesQueryBuilderTest extends \PHPUnit_Framework_TestCase
 
         $query = $queryBuilder->build(['node1\.local'], '~');
 
-        $this->assertEquals('["~", "name", "node1\\\\.local"]', (string)$query);
+        $this->assertEquals('["~", "certname", "node1\\\\.local"]', (string)$query);
     }
 
     /** @test */

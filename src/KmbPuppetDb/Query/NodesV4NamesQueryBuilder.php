@@ -30,7 +30,7 @@ class NodesV4NamesQueryBuilder extends AbstractQueryBuilder
     protected function getQuery($element, $operator)
     {
         if (!empty($element)) {
-            return [$operator, 'name', addslashes($element)];
+            return [$operator, 'certname', addslashes($element)];
         }
     }
 }
