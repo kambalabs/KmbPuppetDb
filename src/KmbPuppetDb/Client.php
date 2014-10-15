@@ -186,6 +186,6 @@ class Client implements ClientInterface
         $splittedUri = explode('?', $uri);
         $uriToLog = array_shift($splittedUri);
         $this->getLogger()->debug("[$duration ms] [" . $statusLine . "] $uriToLog");
-        $this->getLogger()->debug("[$duration ms] [" . $statusLine . "] $uri");
+//        $this->getLogger()->debug("[$duration ms] [" . $statusLine . "] $uri");
     }
 }
