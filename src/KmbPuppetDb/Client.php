@@ -77,7 +77,10 @@ class Client implements ClientInterface
         $this->logRequest($start, $httpResponse->renderStatusLine(), $uri);
         $body = $httpResponse->getBody();
 
-        if (!$httpResponse->isSuccess()) {
+        if ($httpResponse->isNotFound()) {
+            $data = Json::decode($body);
+            throw new InvalidArgumentException($data->error);
+        } elseif (!$httpResponse->isSuccess()) {
             $this->getLogger()->err('[' . $httpResponse->renderStatusLine() . '] ' . $body);
             throw new RuntimeException('Unexpected PuppetDB Response: ' . $httpResponse->renderStatusLine());
         }
@@ -85,10 +88,6 @@ class Client implements ClientInterface
 //        $this->getLogger()->debug($body);
         $data = Json::decode($body);
         $response->setData($data);
-
-        if (isset($data->error)) {
-            throw new InvalidArgumentException($data->error);
-        }
 
         $responseHeaders = $httpResponse->getHeaders();
         if ($responseHeaders->has('X-Records')) {

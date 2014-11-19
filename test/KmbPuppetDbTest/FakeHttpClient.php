@@ -436,7 +436,14 @@ class FakeHttpClient extends Client
         } elseif (preg_match("~/v3/nodes/(.*)/facts$~", $request->getUri(), $matches)) {
             $body = Json::encode($this->getFormattedFacts($matches[1]));
         } elseif (preg_match("~/v3/nodes/(.*)$~", $request->getUri(), $matches)) {
-            $body = Json::encode($this->getNode($matches[1]));
+            $node = $this->getNode($matches[1]);
+            if (isset($node['error'])) {
+                $this->response->expects($this->any())
+                    ->method('isNotFound')
+                    ->will($this->returnValue(true));
+                $statusLine = 'HTTP/1.0 404 Not found';
+            }
+            $body = Json::encode($node);
         } elseif (preg_match("~/v3/event-counts\\?query=%5B%22and%22%2C%20%5B%22%3D%22%2C%20%22certname%22%2C%20%22(.*)%22%5D%2C%20%5B%22%3D%22%2C%20%22latest-report%3F%22%2C%20true%5D%5D~", $request->getUri(), $matches)) {
             $body = Json::encode($this->getEventsCount($matches[1]));
         } elseif (preg_match("~/v3/events\\?query=.+" . $this->getFakeDateTime() . ".+&offset=([0-9]+)&limit=([0-9]+)&include\\-total=true$~", $request->getUri(), $matches)) {
